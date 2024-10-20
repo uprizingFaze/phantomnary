@@ -1,84 +1,104 @@
 /** @type {import('tailwindcss').Config} */
-import { withTV } from 'tailwind-variants/transformer'
+import { withTV } from "tailwind-variants/transformer";
+
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 
 const config = withTV({
-  darkMode: ['class'],
-  content: ['./components/**/*.{ts,tsx,js,jsx}', './app/**/*.{ts,tsx,js,jsx}', './src/**/*.{ts,tsx,js,jsx}'],
+  darkMode: ["class"],
+  content: [
+    "./components/**/*.{ts,tsx,js,jsx}",
+    "./app/**/*.{ts,tsx,js,jsx}",
+    "./src/**/*.{ts,tsx,js,jsx}",
+  ],
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px'
-      }
+        "2xl": "1400px",
+      },
     },
     extend: {
       colors: {
-        light: 'hsl(var(--light))',
-        dark: 'hsl(var(--dark))',
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        toggle: 'hsl(var(--toggle))',
-        bg: 'hsl(var(--bg))',
-        fg: 'hsl(var(--fg))',
+        light: "hsl(var(--light))",
+        dark: "hsl(var(--dark))",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        toggle: "hsl(var(--toggle))",
+        bg: "hsl(var(--bg))",
+        fg: "hsl(var(--fg))",
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          fg: 'hsl(var(--primary-fg))',
+          DEFAULT: "hsl(var(--primary))",
+          fg: "hsl(var(--primary-fg))",
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          fg: 'hsl(var(--secondary-fg))'
+          DEFAULT: "hsl(var(--secondary))",
+          fg: "hsl(var(--secondary-fg))",
         },
         tertiary: {
-          DEFAULT: 'hsl(var(--tertiary))',
-          fg: 'hsl(var(--tertiary-fg))'
+          DEFAULT: "hsl(var(--tertiary))",
+          fg: "hsl(var(--tertiary-fg))",
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          fg: 'hsl(var(--accent-fg))',
-          subtle: 'hsl(var(--accent-subtle))',
-          'subtle-fg': 'hsl(var(--accent-subtle-fg))'
+          DEFAULT: "hsl(var(--accent))",
+          fg: "hsl(var(--accent-fg))",
+          subtle: "hsl(var(--accent-subtle))",
+          "subtle-fg": "hsl(var(--accent-subtle-fg))",
         },
         success: {
-          DEFAULT: 'hsl(var(--success))',
-          fg: 'hsl(var(--success-fg))'
+          DEFAULT: "hsl(var(--success))",
+          fg: "hsl(var(--success-fg))",
         },
         info: {
-          DEFAULT: 'hsl(var(--info))',
-          fg: 'hsl(var(--info-fg))'
+          DEFAULT: "hsl(var(--info))",
+          fg: "hsl(var(--info-fg))",
         },
         danger: {
-          DEFAULT: 'hsl(var(--danger))',
-          fg: 'hsl(var(--danger-fg))'
+          DEFAULT: "hsl(var(--danger))",
+          fg: "hsl(var(--danger-fg))",
         },
         warning: {
-          DEFAULT: 'hsl(var(--warning))',
-          fg: 'hsl(var(--warning-fg))'
+          DEFAULT: "hsl(var(--warning))",
+          fg: "hsl(var(--warning-fg))",
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          fg: 'hsl(var(--muted-fg))'
+          DEFAULT: "hsl(var(--muted))",
+          fg: "hsl(var(--muted-fg))",
         },
         overlay: {
-          DEFAULT: 'hsl(var(--overlay))',
-          fg: 'hsl(var(--overlay-fg))'
-        }
+          DEFAULT: "hsl(var(--overlay))",
+          fg: "hsl(var(--overlay-fg))",
+        },
       },
       borderRadius: {
-        '3xl': 'calc(var(--radius) + 7.5px)',
-        '2xl': 'calc(var(--radius) + 5px)',
-        xl: 'calc(var(--radius) + 2.5px)',
-        lg: 'calc(var(--radius))',
-        md: 'calc(var(--radius) - 2.5px)',
-        sm: 'calc(var(--radius) - 5px)'
-      }
-    }
+        "3xl": "calc(var(--radius) + 7.5px)",
+        "2xl": "calc(var(--radius) + 5px)",
+        xl: "calc(var(--radius) + 2.5px)",
+        lg: "calc(var(--radius))",
+        md: "calc(var(--radius) - 2.5px)",
+        sm: "calc(var(--radius) - 5px)",
+      },
+    },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('tailwindcss-react-aria-components')
-  ]
-})
+    require("tailwindcss-animate"),
+    require("tailwindcss-react-aria-components"),
+    addVariablesForColors,
+  ],
+});
 
-export default config
+export default config;
+
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}

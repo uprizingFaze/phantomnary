@@ -23,6 +23,8 @@ interface BaseTextFieldProps extends TextFieldPrimitiveProps, FieldProps {
   isPending?: boolean
   indicatorPlace?: 'prefix' | 'suffix'
   className?: string
+  value?: string
+  onChange?: (value: string) => void
 }
 
 interface RevealableTextFieldProps extends BaseTextFieldProps {
@@ -49,6 +51,8 @@ const TextField = ({
   className,
   isRevealable,
   type,
+  value,
+  onChange,
   ...props
 }: TextFieldProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false)
@@ -57,6 +61,13 @@ const TextField = ({
   const handleTogglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev)
   }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e.target.value)
+    }
+  }
+
   return (
     <TextFieldPrimitive
       type={inputType}
@@ -73,7 +84,7 @@ const TextField = ({
         ) : prefix ? (
           <span className="atrs isPfx x2e2">{prefix}</span>
         ) : null}
-        <Input className="px-2.5" placeholder={placeholder} />
+        <Input className="px-2.5" placeholder={placeholder} value={value} onChange={handleChange} />
         {isRevealable ? (
           <ButtonPrimitive
             type="button"
