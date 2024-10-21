@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.68",
+    "@tabler/icons-react": "^3.19.0",
     "ai": "^3.4.16",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "embla-carousel-react": "^8.3.0",
@@ -18,12 +20,14 @@
     "input-otp": "^1.2.4",
     "justd-icons": "^1.5.0",
     "next": "14.2.15",
+    "next-cloudinary": "^6.15.0",
     "next-themes": "^0.3.0",
     "next-view-transitions": "^0.3.2",
     "react": "^18",
     "react-aria": "^3.35.1",
     "react-aria-components": "^1.4.1",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.10",
     "react-markdown": "^9.0.1",
     "recharts": "^2.13.0",
     "sonner": "^1.5.0",
@@ -42,5 +46,6 @@
     "tailwindcss": "^3.4.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.15"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

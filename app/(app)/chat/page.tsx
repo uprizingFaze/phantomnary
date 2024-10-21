@@ -38,9 +38,9 @@ export default function Home() {
           ) : (
             <>
               <IconRobot className="h-12 w-12 p-2 mr-2 rounded-full text-black bg-white z-10" />
-              <div className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg max-w-3xl z-10">
-                <p>{message.display}</p>
-              </div>
+              <p className="z-20">
+                {message.display}
+              </p>
             </>
           )}
         </div>

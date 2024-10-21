@@ -37,25 +37,37 @@ export async function continueConversation(
         ]);
       }
 
-      return <div>{content}</div>;
+      return (
+        <div className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg max-w-3xl z-50">
+          {content}
+        </div>
+      );
     },
     tools: {
       showMonthYear: {
         description: "Get month and year",
         parameters: z.object({
+          textmessage: z.string().describe("Text message to show"),
           year: z.string().describe("Year by user"),
           month: z.string().describe("month by user"),
         }),
-        generate: async ({ month, year }) => {
+        generate: async ({ month, year, textmessage }) => {
           history.done((messages: ServerMessage[]) => [
             ...messages,
             {
               role: "assistant",
-              content: `Showing ${month} and ${year}`,
+              content: `Showing ${textmessage}, ${month} and ${year}`,
             },
           ]);
 
-          return <CardTest month={month} year={year} />;
+          return (
+            <div>
+              <p className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg max-w-3xl z-20 mb-3">
+                {textmessage}
+              </p>
+              <CardTest month={month} year={year} />
+            </div>
+          );
         },
       },
       Deploy,
