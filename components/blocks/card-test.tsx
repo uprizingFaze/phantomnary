@@ -16,8 +16,8 @@ export default function CardTest({
         <Card.Description>{`Financial summary for ${month}`}</Card.Description>
       </Card.Header>
       <Card.Content>
-        The monthly financial report shows a 15% increase in revenue compared to
-        last month.
+        {`The year ${year} financial report shows a 15% increase in revenue compared to
+        last month.`}
       </Card.Content>
       <Card.Footer>
         <Button>View Details</Button>

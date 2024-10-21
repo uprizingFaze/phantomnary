@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ClientMessage } from "@/app/(app)/chat/actions";
 import { useActions, useUIState } from "ai/rsc";
 import { generateId } from "ai";

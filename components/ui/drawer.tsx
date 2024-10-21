@@ -89,7 +89,7 @@ const DrawerContentPrimitive = ({ children, ...props }: DrawerOverlayPrimitivePr
 
   useMotionValueEvent(bodyBorderRadius, 'change', (v) => (root.style.borderRadius = `${v}px`))
 
-  const onDragEnd = (_: any, { offset, velocity }: PanInfo) => {
+  const onDragEnd = (_: MouseEvent | TouchEvent, { offset, velocity }: PanInfo) => {
     if (offset.y > h * 0.4 || velocity.y > 10) {
       closeDrawer()
     } else {
@@ -108,7 +108,7 @@ const DrawerContentPrimitive = ({ children, ...props }: DrawerOverlayPrimitivePr
           'flex items-end [--visual-viewport-vertical-padding:100px]'
         ])}
         style={{
-          backgroundColor: bg as any
+          backgroundColor: bg as unknown as string
         }}
       >
         <ModalPrimitive

@@ -1,8 +1,6 @@
-import { FileUploadDemo } from "@/components/blocks/image-upload";
 import { UrlUpload } from "@/components/blocks/url-upload";
 import Cloudinary1 from "@/components/test/cloudinary1";
-import { Button, buttonStyles, Link } from "@/components/ui";
-import { FileUpload } from "@/components/upload";
+import { Button, Link } from "@/components/ui";
 
 export default function Home() {
   return (

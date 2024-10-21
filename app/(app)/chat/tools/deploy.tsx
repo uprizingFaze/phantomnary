@@ -1,7 +1,6 @@
 // deploy.tsx
 import { z } from "zod";
 import { ServerMessage } from "../actions";
-import CardTest from "@/components/blocks/card-test";
 import { getMutableAIState } from "ai/rsc";
 
 export const Deploy = {

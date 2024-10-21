@@ -25,7 +25,7 @@ async function uploadToCloudinary(file: File) {
 }
 
 export function UrlUpload() {
-  const [files, setFiles] = useState<File[]>([]);
+  const [, setFiles] = useState<File[]>([]);
   const handleFileUpload = async (files: File[]) => {
     setFiles(files);
     console.log(files);
