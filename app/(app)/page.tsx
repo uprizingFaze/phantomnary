@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ClientMessage } from "@/app/(app)/chat/actions";
+import { ClientMessage } from "@/app/(app)/actions";
 import { useActions, useUIState } from "ai/rsc";
 import { generateId } from "ai";
 import { Button, TextField } from "@/components/ui";
@@ -38,9 +38,7 @@ export default function Home() {
           ) : (
             <>
               <IconRobot className="h-12 w-12 p-2 mr-2 rounded-full text-black bg-white z-10" />
-              <p className="z-20">
-                {message.display}
-              </p>
+              <p className="z-20">{message.display}</p>
             </>
           )}
         </div>
@@ -63,12 +61,12 @@ export default function Home() {
 
           setInput("");
         }}
-        className="fixed bottom-0 w-full max-w-3xl p-2 mb-8 z-20 flex"
+        className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl p-2 mb-8 z-20 flex"
       >
         <TextField
           className="w-full"
           value={input}
-          placeholder="Say something..."
+          placeholder="Enviar un mensaje"
           onChange={(value: string) => setInput(value)}
         />
         <Button type="submit" className="ml-2">
