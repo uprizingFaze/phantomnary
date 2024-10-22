@@ -1,16 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Badge, Button, Card } from "../ui";
-import Image from "next/image";
 import { toast } from "sonner";
+import { Compare } from "../ui/compare";
 
 interface EditImageProps {
   transformations: string;
 }
 
-export function GenerateBackground({ transformations }: EditImageProps) {
+export function GenerateMain({ transformations }: EditImageProps) {
   const [secureUrl, setSecureUrl] = useState<string>("");
   const [, setIsLoading] = useState<boolean>(true);
+  const [, setImageKey] = useState<number>(0);
 
   useEffect(() => {
     const url = localStorage.getItem("selectedSecureUrl") || "";
@@ -70,19 +71,51 @@ export function GenerateBackground({ transformations }: EditImageProps) {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    const checkImage = async () => {
+      setIsLoading(true);
+      let blob: Blob | null = null;
+      while (!blob) {
+        try {
+          blob = await fetchImage(transformedUrl);
+        } catch (error) {
+          if ((error as Error).message === "423") {
+            await new Promise((resolve) => setTimeout(resolve, 2000)); // Reintentar después de 2 segundos
+          } else {
+            console.error("Error al descargar la imagen:", error);
+            toast.error("Error al descargar la imagen");
+            setIsLoading(false);
+            return;
+          }
+        }
+      }
+      setIsLoading(false);
+      setImageKey((prevKey) => prevKey + 1); // Forzar actualización de la imagen
+    };
+
+    checkImage();
+  }, [transformedUrl]);
+
   return (
     <Card className="max-w-4xl">
       <Card.Header>
-        <Card.Title>Editando fondo</Card.Title>
-        <Card.Description>Puedes seguir pidiendo cambios</Card.Description>
-        <Badge shape="circle">{transformations}</Badge>
+        <Card.Title>Escalado</Card.Title>
+        <Card.Description>Compara</Card.Description>
+        <div>
+
+          <Badge shape="circle" className="inline-block w-auto px-2">
+            {transformations}
+          </Badge>
+        </div>
       </Card.Header>
       <Card.Content>
-        <Image
-          src={transformedUrl}
-          alt="Uploaded Image"
-          width={500}
-          height={500}
+        <Compare
+          firstImage={secureUrl}
+          secondImage={transformedUrl}
+          firstImageClassName="object-cover object-left-top"
+          secondImageClassname="object-cover object-left-top"
+          className="h-[250px] w-[200px] md:h-[500px] md:w-[500px]"
+          slideMode="hover"
         />
       </Card.Content>
       <Card.Footer className="flex justify-between">

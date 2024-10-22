@@ -68,6 +68,7 @@ export default function Home() {
           value={input}
           placeholder="Enviar un mensaje"
           onChange={(value: string) => setInput(value)}
+          aria-label="Campo de texto para enviar un mensaje"
         />
         <Button type="submit" className="ml-2">
           Send

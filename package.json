@@ -11,6 +11,9 @@
   "dependencies": {
     "@ai-sdk/openai": "^0.0.68",
     "@tabler/icons-react": "^3.19.0",
+    "@tsparticles/engine": "^3.5.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.5.0",
     "ai": "^3.4.16",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",

@@ -22,7 +22,7 @@ const ShowTableImage: React.FC = () => {
   }, []);
 
   if (uploadResults.length === 0) {
-    return <div>No haz subido imagenes</div>;
+    return <div>No has subido imagenes</div>;
   }
 
   const formatDate = (dateString: string) => {
