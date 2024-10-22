@@ -2,7 +2,7 @@
 
 import { Card, Skeleton } from '@/components/ui'
 
-export default function SkeletonDemo() {
+export function SkeletonDemo() {
   return (
     <Card className="p-4">
       <div className="flex gap-2">

@@ -1,6 +1,7 @@
 "use client";
 
-import { Card, Table } from "@/components/ui";
+import { Card, Table, Button, Form, Modal, TextField } from "@/components/ui";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function ShowTableImage() {
@@ -40,13 +41,14 @@ export default function ShowTableImage() {
     <Card className="max-w-4xl">
       <Card.Header>
         <Card.Title>Imagenes</Card.Title>
-        <Card.Description>Maneja tus imagenes suidas.</Card.Description>
+        <Card.Description>Maneja tus imagenes subidas.</Card.Description>
       </Card.Header>
       <Table aria-label="Upload Results">
         <Table.Header>
           <Table.Column isRowHeader>#</Table.Column>
           <Table.Column>Fecha de creación</Table.Column>
           <Table.Column>URL</Table.Column>
+          <Table.Column>Acion</Table.Column>
         </Table.Header>
         <Table.Body>
           {uploadResults.map((result) => (
@@ -54,6 +56,32 @@ export default function ShowTableImage() {
               <Table.Cell>{result.id}</Table.Cell>
               <Table.Cell>{formatDate(result.created_at)}</Table.Cell>
               <Table.Cell>{result.secure_url}</Table.Cell>
+              <Table.Cell>
+                <Modal>
+                  <Button size="square-petite" appearance="outline">
+                    Ver
+                  </Button>
+                  <Modal.Content>
+                    <Modal.Header>
+                      <Modal.Title>Tu imagen</Modal.Title>
+                      <Modal.Description>
+uwu
+                      </Modal.Description>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Image
+                        src={result.secure_url}
+                        alt="Uploaded Image"
+                        width={500}
+                        height={500}
+                      />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Modal.Close>Cancel</Modal.Close>
+                    </Modal.Footer>
+                  </Modal.Content>
+                </Modal>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

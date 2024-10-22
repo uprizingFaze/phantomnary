@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FileUpload } from "@/components/upload";
 import { Card } from "../ui";
+import { toast } from "sonner";
 
 const cloudName = "dars3e4eo"; // Reemplaza con tu cloud name
 const uploadPreset = "nqni9wz9"; // Reemplaza con tu upload preset
@@ -32,6 +33,7 @@ export function UrlUpload() {
     try {
       const uploadPromises = files.map((file) => uploadToCloudinary(file));
       const uploadResults = await Promise.all(uploadPromises);
+      toast.success("Imagen subida exitosamente");
 
       // Recuperar los datos existentes del local storage
       const existingData = JSON.parse(
@@ -53,6 +55,7 @@ export function UrlUpload() {
       console.log("Archivos subidos:", updatedData);
     } catch (error) {
       console.error("Error subiendo archivos:", error);
+      toast.error("Error subiendo archivos");
     }
   };
 
