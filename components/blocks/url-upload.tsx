@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FileUpload } from "@/components/upload";
+import { FileUpload } from "@/components/blocks/upload";
 import { Card } from "../ui";
 import { toast } from "sonner";
 

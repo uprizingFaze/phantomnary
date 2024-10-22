@@ -5,11 +5,11 @@ import { openai } from "@ai-sdk/openai";
 import { ReactNode } from "react";
 import { z } from "zod";
 import { generateId } from "ai";
-import { Deploy } from "./tools/deploy";
+
 import ShowTableImage from "@/components/blocks/table";
 import { UrlUpload } from "@/components/blocks/url-upload";
 import { EditImage } from "@/components/blocks/edit-image";
-import { RemoveBackground } from "@/components/blocks/remove-bg";
+import { GenerateBackground } from "@/components/blocks/generate-bg";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -47,7 +47,8 @@ export async function continueConversation(
       `Manten el la URL con todas las transformaciones que vayas haciendo a menos que yo te diga que borres alguna transformacion` +
       `Recuerda utiliza correctamente las transformaciones de cloudinary, recuerda que son las de la url` +
       `Algunos ejemplos de transformaciones son: bo_40px_solid_brown, cs_srgb, e_sepia, g_north_west, h_200, w_200, x_10, y_10, z_1.5, a_90, c_scale,w_300/e_upscale, e_gen_background_replace[:prompt_<prompt>][;seed_<seed>], e_gen_recolor:prompt_(<prompt 1>[;...;<prompt n>]);to-color_<color>[;multiple_<detect multiple>], e_gradient_fade[:<type>][:<strength>], e_background_removal[:fineedges_<enable fine edges>], e_background_removal` +
-      `b_gen_fill[:prompt_<prompt>][;ignore-foreground_<ignore foreground>][;seed_<seed>] `,
+      `b_gen_fill[:prompt_<prompt>][;ignore-foreground_<ignore foreground>][;seed_<seed>] `+
+      `Siempre recuerda que las transformaciones y ve agregando lo que pidan a menos que el usuario quiera iniciar de nuevo` ,
     text: ({ content, done }) => {
       if (done) {
         history.done((messages: ServerMessage[]) => [
@@ -146,7 +147,7 @@ export async function continueConversation(
           transformations: z
             .string()
             .describe(
-              "ejemplos de transformaciones de cloudinary: e_gen_recolor:prompt_sweater;to-color_green, e_gen_background_replace:prompt_an%20empty%20beach"
+              "ejemplos de transformaciones de cloudinary: e_gen_recolor:prompt_sweater;to-color_green, e_gen_background_replace:prompt_an%20empty%20beach Ah agregale al promp algo de horror siempre."
             ),
         }),
         generate: async ({ textmessage, transformations }) => {
@@ -163,12 +164,12 @@ export async function continueConversation(
               <p className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg z-20 mb-3">
                 {textmessage}
               </p>
-              <RemoveBackground transformations={transformations} />
+              <GenerateBackground transformations={transformations} />
             </div>
           );
         },
       },
-      Deploy,
+
     },
   });
 

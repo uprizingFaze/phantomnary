@@ -8,10 +8,9 @@ interface EditImageProps {
   transformations: string;
 }
 
-export function RemoveBackground({ transformations }: EditImageProps) {
+export function GenerateBackground({ transformations }: EditImageProps) {
   const [secureUrl, setSecureUrl] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const url = localStorage.getItem("selectedSecureUrl") || "";
@@ -71,32 +70,6 @@ export function RemoveBackground({ transformations }: EditImageProps) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const checkImage = async () => {
-      setIsLoading(true);
-      let imageReady = false;
-      while (!imageReady) {
-        try {
-          await fetchImage(transformedUrl);
-          imageReady = true;
-        } catch (error) {
-          if ((error as Error).message === "423") {
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Reintentar después de 2 segundos
-          } else {
-            console.error("Error al cargar la imagen:", error);
-            toast.error("Error al cargar la imagen");
-            setIsLoading(false);
-            return;
-          }
-        }
-      }
-      setImageLoaded(true);
-      setIsLoading(false);
-    };
-
-    checkImage();
-  }, [transformedUrl]);
-
   return (
     <Card className="max-w-4xl">
       <Card.Header>
@@ -105,16 +78,12 @@ export function RemoveBackground({ transformations }: EditImageProps) {
         <Badge shape="circle">{transformations}</Badge>
       </Card.Header>
       <Card.Content>
-        {isLoading && <div>Cargando</div> }
-        {!isLoading && imageLoaded && (
-          <Image
-            src={transformedUrl}
-            alt="Uploaded Image"
-            width={500}
-            height={500}
-            onLoadingComplete={() => setIsLoading(false)}
-          />
-        )}
+        <Image
+          src={transformedUrl}
+          alt="Uploaded Image"
+          width={500}
+          height={500}
+        />
       </Card.Content>
       <Card.Footer className="flex justify-between">
         <Button appearance={"outline"} onPress={handleCopyUrl}>
