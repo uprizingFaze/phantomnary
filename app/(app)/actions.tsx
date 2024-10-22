@@ -203,7 +203,6 @@ export async function continueConversation(
           );
         },
       },
-
       genFill: {
         description:
           "Generar fill o relleno, cuando el usuario pida generar fill o relleno a la imagen",

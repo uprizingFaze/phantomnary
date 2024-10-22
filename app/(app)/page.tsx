@@ -5,7 +5,7 @@ import { ClientMessage } from "@/app/(app)/actions";
 import { useActions, useUIState } from "ai/rsc";
 import { generateId } from "ai";
 import { Button, TextField } from "@/components/ui";
-import { IconLaunch, IconRobot } from "justd-icons";
+import { IconGhost, IconUser } from "@tabler/icons-react";
 
 export const maxDuration = 30;
 
@@ -33,11 +33,11 @@ export default function Home() {
               <div className="bg-black dark:bg-white dark:text-black text-white p-2 rounded-lg max-w-3xl z-10">
                 <p>{message.display}</p>
               </div>
-              <IconLaunch className="h-12 w-12 p-2 ml-2 text-black bg-white rounded-full z-10" />
+              <IconUser className="h-12 w-12 p-2 ml-2 text-black dark:text-white border bg-overlay rounded-full z-10" />
             </>
           ) : (
             <>
-              <IconRobot className="h-12 w-12 p-2 mr-2 rounded-full text-black bg-white z-10" />
+              <IconGhost className="h-12 w-12 p-2 mr-2 rounded-full text-white bg-black dark:text-black dark:bg-white z-10" />
               <p className="z-20">{message.display}</p>
             </>
           )}

@@ -5,6 +5,7 @@ import { IconBrandGithub } from "justd-icons";
 import { GridList } from "./ui/grid-list";
 import { useState } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function Navbar() {
   const [, setSelectedItem] = useState<string | null>(null);
@@ -19,7 +20,7 @@ export default function Navbar() {
   return (
     <section className="m-4">
       <nav className="w-3/4 mx-auto flex justify-between items-center p-3 bg-overlay border text-white rounded-lg shadow-lg sticky top-0">
-        <div className="text-lg font-bold">Phantomnary</div>
+        <div className="text-lg dark:text-white text-black font-bold">Phantomnary</div>
         <ul className="flex space-x-4 items-center justify-center">
           <li className="flex items-center justify-center">
             <Popover>
@@ -47,9 +48,11 @@ export default function Navbar() {
             </Popover>
           </li>
           <li>
+            <Link href="https://github.com/uprizingFaze/phantomnary">
             <Button size="square-petite" appearance="outline">
               <IconBrandGithub />
             </Button>
+            </Link>
           </li>
           <li className="flex items-center justify-center">
             <ThemeSwitcher />
@@ -65,5 +68,7 @@ const items = [
   { id: "2", name: "Ver mis imagenes" },
   { id: "3", name: "Editar imagen" },
   { id: "4", name: "Generar fondo" },
+  { id: "5", name: "Escalar imagen" },
+  { id: "5", name: "Generar fill" },
 
 ];
