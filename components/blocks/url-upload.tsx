@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { FileUpload } from "@/components/upload";
+import { Card } from "../ui";
 
 const cloudName = "dars3e4eo"; // Reemplaza con tu cloud name
 const uploadPreset = "nqni9wz9"; // Reemplaza con tu upload preset
@@ -19,7 +20,6 @@ async function uploadToCloudinary(file: File) {
   if (!response.ok) {
     throw new Error("Error al subir la imagen a Cloudinary");
   }
-  console.log(response.json);
 
   return response.json();
 }
@@ -28,20 +28,37 @@ export function UrlUpload() {
   const [, setFiles] = useState<File[]>([]);
   const handleFileUpload = async (files: File[]) => {
     setFiles(files);
-    console.log(files);
 
     try {
-      const uploadPromises = files.map(file => uploadToCloudinary(file));
+      const uploadPromises = files.map((file) => uploadToCloudinary(file));
       const uploadResults = await Promise.all(uploadPromises);
-      console.log(uploadResults);
+
+      // Recuperar los datos existentes del local storage
+      const existingData = JSON.parse(
+        localStorage.getItem("uploadResults") || "[]"
+      );
+
+      // Extraer created_at, secure_url y generar un ID incremental
+      const newUploadData = uploadResults.map((result, index) => ({
+        id: existingData.length + index,
+        created_at: result.created_at,
+        secure_url: result.secure_url,
+      }));
+
+      // Añadir los nuevos datos a los existentes
+      const updatedData = [...existingData, ...newUploadData];
+
+      // Guardar el conjunto actualizado de datos de vuelta en el local storage
+      localStorage.setItem("uploadResults", JSON.stringify(updatedData));
+      console.log("Archivos subidos:", updatedData);
     } catch (error) {
       console.error("Error subiendo archivos:", error);
     }
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+    <Card className="max-w-2xl">
       <FileUpload onChange={handleFileUpload} />
-    </div>
+    </Card>
   );
 }

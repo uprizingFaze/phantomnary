@@ -7,6 +7,8 @@ import { z } from "zod";
 import { generateId } from "ai";
 import CardTest from "@/components/blocks/card-test";
 import { Deploy } from "./tools/deploy";
+import ShowTableImage from "@/components/blocks/results";
+import { UrlUpload } from "@/components/blocks/url-upload";
 
 export interface ServerMessage {
   role: "user" | "assistant";
@@ -66,6 +68,54 @@ export async function continueConversation(
                 {textmessage}
               </p>
               <CardTest month={month} year={year} />
+            </div>
+          );
+        },
+      },
+      showImages: {
+        description: "Mostrar imágenes subidas",
+        parameters: z.object({
+          textmessage: z.string().describe("Text message to show"),
+        }),
+        generate: async ({ textmessage }) => {
+          history.done((messages: ServerMessage[]) => [
+            ...messages,
+            {
+              role: "assistant",
+              content: `Showing ${textmessage}`,
+            },
+          ]);
+
+          return (
+            <div>
+              <p className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg max-w-3xl z-20 mb-3">
+                {textmessage}
+              </p>
+              <ShowTableImage />
+            </div>
+          );
+        },
+      },
+      uploadImage: {
+        description: "Subir imagen",
+        parameters: z.object({
+          textmessage: z.string().describe("Text message to show"),
+        }),
+        generate: async ({ textmessage }) => {
+          history.done((messages: ServerMessage[]) => [
+            ...messages,
+            {
+              role: "assistant",
+              content: `Showing ${textmessage}`,
+            },
+          ]);
+
+          return (
+            <div>
+              <p className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg z-20 mb-3">
+                {textmessage}
+              </p>
+              <UrlUpload />
             </div>
           );
         },
