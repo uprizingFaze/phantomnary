@@ -108,4 +108,5 @@ const options = [
   { id: "3", name: "Escalar imagen", ai: "ai" },
   { id: "4", name: "Generar relleno", ai: "ai" },
   { id: "5", name: "Remplazo Generativo", ai: "ai" },
+  { id: "6", name: "Eliminación Generativa", ai: "ai" },
 ];

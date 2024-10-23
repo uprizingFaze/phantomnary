@@ -258,6 +258,36 @@ export async function continueConversation(
           );
         },
       },
+      genRemove: {
+        description:
+          "Remover un objeto de una imagen. Detecta y elimina un objeto de una imagen.",
+        parameters: z.object({
+          textmessage: z.string().describe("Un mensaje para mostrar"),
+          transformations: z
+            .string()
+            .describe(
+              "Crea un Generative Remove, ejemplos de Generative Remove de cloudinary: e_gen_remove:prompt_the%20person, e_gen_remove:prompt_phone;multiple_true, e_gen_remove:prompt_(keyboard;phone;mouse) e_gen_remove:prompt_text:the%20big%20england%20flag "
+            ),
+        }),
+        generate: async ({ textmessage, transformations }) => {
+          history.done((messages: ServerMessage[]) => [
+            ...messages,
+            {
+              role: "assistant",
+              content: `Showing ${textmessage}`,
+            },
+          ]);
+
+          return (
+            <div>
+              <p className="dark:bg-black bg-white dark:text-white border text-black p-2 rounded-lg z-20 mb-3">
+                {textmessage}
+              </p>
+              <GenerateMain transformations={transformations} />
+            </div>
+          );
+        },
+      },
     },
   });
 
