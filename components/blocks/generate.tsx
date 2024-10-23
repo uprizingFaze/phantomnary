@@ -1,14 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Badge, Button, Card } from "../ui";
+import { Badge, Button, Card, Tooltip } from "../ui";
 import Image from "next/image";
 import { toast } from "sonner";
+import { IconReload } from "@tabler/icons-react";
+import { Description } from "../ui/field";
 
 interface EditImageProps {
   transformations: string;
 }
 
-export function GenerateBackground({ transformations }: EditImageProps) {
+export function GenerateMain({ transformations }: EditImageProps) {
   const [secureUrl, setSecureUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [imageKey, setImageKey] = useState<number>(0);
@@ -71,50 +73,69 @@ export function GenerateBackground({ transformations }: EditImageProps) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const checkImage = async () => {
-      setIsLoading(true);
-      let blob: Blob | null = null;
-      while (!blob) {
-        try {
-          blob = await fetchImage(transformedUrl);
-        } catch (error) {
-          if ((error as Error).message === "423") {
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // Reintentar después de 2 segundos
-          } else {
-            console.error("Error al descargar la imagen:", error);
-            toast.error("Error al descargar la imagen");
-            setIsLoading(false);
-            return;
-          }
+  const checkImage = async () => {
+    setIsLoading(true);
+    let blob: Blob | null = null;
+    while (!blob) {
+      try {
+        blob = await fetchImage(transformedUrl);
+      } catch (error) {
+        if ((error as Error).message === "423") {
+          await new Promise((resolve) => setTimeout(resolve, 2000)); // Reintentar después de 2 segundos
+        } else {
+          console.error("Error al descargar la imagen:", error);
+          toast.error("Error al descargar la imagen");
+          setIsLoading(false);
+          return;
         }
       }
-      setIsLoading(false);
-      setImageKey((prevKey) => prevKey + 1); // Forzar actualización de la imagen
-    };
+    }
+    setIsLoading(false);
+    setImageKey((prevKey) => prevKey + 1); // Forzar actualización de la imagen
+  };
 
+  useEffect(() => {
     checkImage();
   }, [transformedUrl]);
 
   return (
-    <Card className="max-w-4xl">
+    <Card className="max-w-96 min-w-96">
       <Card.Header>
-        <Card.Title>Editando fondo</Card.Title>
-        <Card.Description>Puedes seguir pidiendo cambios</Card.Description>
-        <Badge shape="circle">{transformations}</Badge>
+        <div className="flex flex-row justify-between">
+          <Card.Title>Imagen editada</Card.Title>
+          <Button
+            size="square-petite"
+            appearance="outline"
+            className="ml-4"
+            onPress={checkImage}
+          >
+            <IconReload size={20} />
+          </Button>
+        </div>
+        <Card.Description>
+          Observa tus cambios{" "}
+          <Tooltip>
+            <Tooltip.Trigger aria-label="Fresh drop alert">
+              <Badge intent="warning" shape="circle">Transformations</Badge>
+            </Tooltip.Trigger>
+            <Tooltip.Content showArrow={false}>
+              <Description>{transformations}</Description>
+            </Tooltip.Content>
+          </Tooltip>
+        </Card.Description>
       </Card.Header>
-      <Card.Content>
+      <Card.Content className="max-h-96 min-h-72 flex justify-center items-center">
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
-            <span>Loading...</span>
+            <span>Cargando...</span>
           </div>
         ) : (
           <Image
             key={imageKey} // Usar imageKey para forzar la actualización
             src={transformedUrl}
             alt="Uploaded Image"
-            width={500}
-            height={500}
+            width={250}
+            height={250}
           />
         )}
       </Card.Content>

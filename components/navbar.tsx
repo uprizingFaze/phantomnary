@@ -1,6 +1,6 @@
 "use client";
 import { ThemeSwitcher } from "./theme-toggle";
-import { Button, Popover } from "@/components/ui";
+import { Badge, Button, Popover } from "@/components/ui";
 import { IconBrandGithub } from "justd-icons";
 import { GridList } from "./ui/grid-list";
 import { useState } from "react";
@@ -20,19 +20,27 @@ export default function Navbar() {
   return (
     <section className="m-4">
       <nav className="w-3/4 mx-auto flex justify-between items-center p-3 bg-overlay border text-white rounded-lg shadow-lg sticky top-0">
-        <div className="text-lg dark:text-white text-black font-bold">Phantomnary</div>
+        <div className="text-lg dark:text-white text-black font-bold">
+          Phantomnary
+        </div>
         <ul className="flex space-x-4 items-center justify-center">
           <li className="flex items-center justify-center">
             <Popover>
               <Button intent="secondary">Prompts</Button>
               <Popover.Content showArrow={true} className="min-w-72">
-                <p className="mb-1 text-lg">Prompts</p>
+                <div className="flex flex-row justify-between ">
+                  <h2 className="my-1 text-lg">Prompts</h2>
+                  <Badge className="max-h-5" shape="circle" intent="warning">
+                    Selecciona
+                  </Badge>
+                </div>
+                <p className="mb-2 text-muted-fg">Iniciar</p>
                 <GridList
                   selectionMode="single"
-                  items={items}
+                  items={principal}
                   aria-label="Select your favorite bands"
                   onSelectionChange={(selectedKeys) => {
-                    const selectedItem = items.find(
+                    const selectedItem = principal.find(
                       (item) => item.id === Array.from(selectedKeys)[0]
                     );
                     if (selectedItem) {
@@ -44,14 +52,41 @@ export default function Navbar() {
                     <GridList.Item id={item.id}>{item.name}</GridList.Item>
                   )}
                 </GridList>
+                <p className="my-2 mt-3 text-muted-fg">Edita tus imagenes</p>
+                <GridList
+                  selectionMode="single"
+                  items={options}
+                  aria-label="Select your favorite bands"
+                  onSelectionChange={(selectedKeys) => {
+                    const selectedItem = options.find(
+                      (item) => item.id === Array.from(selectedKeys)[0]
+                    );
+                    if (selectedItem) {
+                      handleSelection(selectedItem);
+                    }
+                  }}
+                >
+                  {(item) => (
+                    <GridList.Item id={item.id}>
+                      <div className="flex flex-row justify-between items-center">
+                        {item.name}
+                        {item.ai && (
+                          <Badge className="ml-2" color="primary">
+                            AI
+                          </Badge>
+                        )}
+                      </div>
+                    </GridList.Item>
+                  )}
+                </GridList>
               </Popover.Content>
             </Popover>
           </li>
           <li>
             <Link href="https://github.com/uprizingFaze/phantomnary">
-            <Button size="square-petite" appearance="outline">
-              <IconBrandGithub />
-            </Button>
+              <Button size="square-petite" appearance="outline">
+                <IconBrandGithub />
+              </Button>
             </Link>
           </li>
           <li className="flex items-center justify-center">
@@ -63,12 +98,14 @@ export default function Navbar() {
   );
 }
 
-const items = [
+const principal = [
   { id: "1", name: "Subir una imagen" },
-  { id: "2", name: "Ver mis imagenes" },
-  { id: "3", name: "Editar imagen" },
-  { id: "4", name: "Generar fondo" },
-  { id: "5", name: "Escalar imagen" },
-  { id: "6", name: "Generar fill" },
-
+  { id: "2", name: "Ver mis imágenes" },
+];
+const options = [
+  { id: "1", name: "Editar imagen" },
+  { id: "2", name: "Generar fondo", ai: "ai" },
+  { id: "3", name: "Escalar imagen", ai: "ai" },
+  { id: "4", name: "Generar relleno", ai: "ai" },
+  { id: "5", name: "Remplazo Generativo", ai: "ai" },
 ];

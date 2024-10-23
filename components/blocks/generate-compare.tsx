@@ -8,7 +8,7 @@ interface EditImageProps {
   transformations: string;
 }
 
-export function GenerateMain({ transformations }: EditImageProps) {
+export function GenerateCompare({ transformations }: EditImageProps) {
   const [secureUrl, setSecureUrl] = useState<string>("");
   const [, setIsLoading] = useState<boolean>(true);
   const [, setImageKey] = useState<number>(0);
