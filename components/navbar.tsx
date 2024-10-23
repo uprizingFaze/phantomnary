@@ -69,6 +69,6 @@ const items = [
   { id: "3", name: "Editar imagen" },
   { id: "4", name: "Generar fondo" },
   { id: "5", name: "Escalar imagen" },
-  { id: "5", name: "Generar fill" },
+  { id: "6", name: "Generar fill" },
 
 ];
