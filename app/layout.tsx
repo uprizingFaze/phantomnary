@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/react';
 import { AI } from "@/app/ai";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
@@ -37,6 +38,7 @@ export default function RootLayout({
             <AI>
               <Toast position="bottom-left" />
               {children}
+              <Analytics />
             </AI>
           </Providers>
         </body>
