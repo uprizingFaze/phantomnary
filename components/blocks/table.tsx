@@ -46,7 +46,7 @@ const ShowTableImage: React.FC = () => {
     <Card className="max-w-3xl">
       <Card.Header>
         <Card.Title>Imagenes</Card.Title>
-        <Card.Description>Maneja tus imagenes subidas.</Card.Description>
+        <Card.Description>Importante: Selecciona la imagen con la que quieres trabjar</Card.Description>
       </Card.Header>
       <Table aria-label="Upload Results">
         <Table.Header>

@@ -91,7 +91,7 @@ export async function continueConversation(
         },
       },
       showImages: {
-        description: "Mostrar imágenes subidas",
+        description: "Mostrar y seleccionar imágenes subidas",
         parameters: z.object({
           textmessage: z.string().describe("Text message to show"),
         }),

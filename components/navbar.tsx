@@ -34,7 +34,7 @@ export default function Navbar() {
                     Selecciona
                   </Badge>
                 </div>
-                <p className="mb-2 text-muted-fg">Iniciar</p>
+                <p className="mb-2 text-muted-fg">Iniciar. Es importante enviar estos 2 mensajes.</p>
                 <GridList
                   selectionMode="single"
                   items={principal}
