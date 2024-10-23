@@ -36,7 +36,7 @@ export default function RootLayout({
         >
           <Providers>
             <AI>
-              <Toast position="bottom-left" />
+              <Toast position="top-left" />
               {children}
               <Analytics />
             </AI>
